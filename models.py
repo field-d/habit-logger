@@ -1,62 +1,38 @@
+from datetime import date
+
 class Entry:
 
-    def __init__(self, mood_score: int, calories: int, exercise_minutes: int, sleep_score: int):
+    def __init__(self, mood_score: int, calories: int, exercise_minutes: int, sleep_score: int, entry_date: date = None):
 
         self.mood_score = self._mood_validation(mood_score)
         self.calories = self._calories_validation(calories)
         self.exercise_minutes = self._exercise_validation(exercise_minutes)
         self.sleep_score = self._sleep_validation(sleep_score)
+        self.entry_date = entry_date if entry_date is not None else date.today()
 
     def _mood_validation(self, mood_score: int) -> int:
 
-        if not mood_score:
+        if not mood_score or mood_score < 0 or mood_score > 10:
             return 0
-
-        if mood_score > 10:
-            return 0
-        else:
-            return mood_score
-
-    def mood_rating(self):
-
-        if self.mood_score == 0:
-            return "No Data"
-
-        if self.mood_score < 5:
-            return "Bad Day"
-        else:
-            return "Good Day"
+        return mood_score
 
     def _calories_validation(self, calories: int) -> int:
 
-        if not calories:
+        if not calories or calories < 0:
             return 0
-        elif calories > 1800 and calories < 2200:
-            return calories
-
-    def calorie_rating(self):
-
-        if self.calories == 0:
-            return "No Data"
-        else:
-            return self.calories
+        return calories
 
     def _exercise_validation(self, exercise_minutes: int) -> int:
 
-        if not exercise_minutes:
+        if not exercise_minutes or exercise_minutes < 0:
             return 0
-        else:
-            return exercise_minutes
+        return exercise_minutes
 
     def _sleep_validation(self, sleep_score: int) -> int:
 
-        if not sleep_score:
+        if not sleep_score or sleep_score < 0 or sleep_score > 100:
             return 0
-
-        if sleep_score > 100:
-            return 0
-        else:
-            return sleep_score
+        return sleep_score
 
     def total_score(self):
 
@@ -124,7 +100,7 @@ class HabitLog:
 
         if not self.entries:
             return 0
-        return sum(e.mood_score() for e in self.entries.values()) / len(self.entries)
+        return sum(e.mood_score for e in self.entries.values()) / len(self.entries)
 
     def average_total_score(self) -> float:
 
