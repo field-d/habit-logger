@@ -77,7 +77,7 @@ class Entry:
         return score
 
     def __str__(self):
-        return f"Mood Score: {self.mood_score}, Calories: {self.calories}, Sleep Score {self.sleep_score}, Exercise Minutes: {self.exercise_minutes}\nTotal Score: {self.total_score()}"
+        return f"Date: {self.entry_date}, Mood Score: {self.mood_score}, Calories: {self.calories}, Sleep Score {self.sleep_score}, Exercise Minutes: {self.exercise_minutes}\nTotal Score: {self.total_score()}"
 
 
 class HabitLog:
